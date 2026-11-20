@@ -299,12 +299,19 @@ const MODELOS={
   alarme:{label:'Alarme',itens:[{nome:'Modelo 1',video:''},{nome:'Modelo 2',video:''},{nome:'Modelo 3',video:''}]},
   multimidia:{label:'Multimídia',itens:[
     {nome:'Instalação 1',video:'videos/multimidia-1.mp4',poster:'videos/multimidia-1.jpg'},
-    {nome:'Instalação 2',video:'videos/multimidia-2.mp4',poster:'videos/multimidia-2.jpg'}]},
+    {nome:'Instalação 2',video:'videos/multimidia-2.mp4',poster:'videos/multimidia-2.jpg'},
+    {nome:'Central com GPS',video:'videos/multimidia-3.mp4',poster:'videos/multimidia-3.jpg'},
+    {nome:'Instalação 3',video:'videos/multimidia-4.mp4',poster:'videos/multimidia-4.jpg'},
+    {nome:'Tela grande',video:'videos/multimidia-5.mp4',poster:'videos/multimidia-5.jpg'},
+    {nome:'Monitor de encosto',video:'videos/multimidia-6.mp4',poster:'videos/multimidia-6.jpg'}]},
+  som:{label:'Som',itens:[
+    {nome:'Subwoofers e alto-falantes',video:'videos/som-1.mp4',poster:'videos/som-1.jpg'}]},
   vidro:{label:'Vidro elétrico',itens:[{nome:'Modelo 1',video:''},{nome:'Modelo 2',video:''},{nome:'Modelo 3',video:''}]},
   pelicula:{label:'Película',itens:[
     {nome:'Instalação 1',video:'videos/pelicula-1.mp4',poster:'videos/pelicula-1.jpg'},
     {nome:'Instalação 2',video:'videos/pelicula-2.mp4',poster:'videos/pelicula-2.jpg'},
-    {nome:'Instalação 3',video:'videos/pelicula-3.mp4',poster:'videos/pelicula-3.jpg'}]}
+    {nome:'Instalação 3',video:'videos/pelicula-3.mp4',poster:'videos/pelicula-3.jpg'},
+    {nome:'Vidro traseiro',video:'videos/pelicula-4.mp4',poster:'videos/pelicula-4.jpg'}]}
 };
 const tabsEl=document.querySelector('.tabs'),gridEl=document.getElementById('vgrid');
 tabsEl.innerHTML=Object.entries(MODELOS).map(([k,m])=>`<button type="button" class="tab" role="tab" data-tab="${k}">${m.label}</button>`).join('');
