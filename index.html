@@ -99,6 +99,7 @@ h2{font-size:clamp(38px,5vw,60px);font-weight:800;margin-bottom:14px}
 .vcard:nth-child(2){animation-delay:.07s}.vcard:nth-child(3){animation-delay:.14s}
 @keyframes pop{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .vmedia{aspect-ratio:16/10;background:radial-gradient(circle at 50% 40%,#16243f,#080c14);display:grid;place-items:center;position:relative}
+.vmedia.has-video{aspect-ratio:9/14}
 .vmedia video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
 .vplay{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(47,140,255,.5);background:rgba(47,140,255,.12)}
 .vplay svg{width:26px;height:26px;fill:var(--cyan);margin-left:3px}
@@ -296,9 +297,14 @@ document.getElementById('y').textContent=new Date().getFullYear();
 const WA='https://wa.me/5561999526282?text=';
 const MODELOS={
   alarme:{label:'Alarme',itens:[{nome:'Modelo 1',video:''},{nome:'Modelo 2',video:''},{nome:'Modelo 3',video:''}]},
-  multimidia:{label:'Multimídia',itens:[{nome:'Modelo 1',video:''},{nome:'Modelo 2',video:''},{nome:'Modelo 3',video:''}]},
+  multimidia:{label:'Multimídia',itens:[
+    {nome:'Instalação 1',video:'videos/multimidia-1.mp4',poster:'videos/multimidia-1.jpg'},
+    {nome:'Instalação 2',video:'videos/multimidia-2.mp4',poster:'videos/multimidia-2.jpg'}]},
   vidro:{label:'Vidro elétrico',itens:[{nome:'Modelo 1',video:''},{nome:'Modelo 2',video:''},{nome:'Modelo 3',video:''}]},
-  pelicula:{label:'Película',itens:[{nome:'Modelo 1',video:''},{nome:'Modelo 2',video:''},{nome:'Modelo 3',video:''}]}
+  pelicula:{label:'Película',itens:[
+    {nome:'Instalação 1',video:'videos/pelicula-1.mp4',poster:'videos/pelicula-1.jpg'},
+    {nome:'Instalação 2',video:'videos/pelicula-2.mp4',poster:'videos/pelicula-2.jpg'},
+    {nome:'Instalação 3',video:'videos/pelicula-3.mp4',poster:'videos/pelicula-3.jpg'}]}
 };
 const tabsEl=document.querySelector('.tabs'),gridEl=document.getElementById('vgrid');
 tabsEl.innerHTML=Object.entries(MODELOS).map(([k,m])=>`<button type="button" class="tab" role="tab" data-tab="${k}">${m.label}</button>`).join('');
@@ -308,9 +314,9 @@ function setTab(k){
   gridEl.innerHTML=m.itens.map(it=>{
     const msg=encodeURIComponent(`Olá! Vim pelo site e quero saber mais sobre: ${m.label} - ${it.nome}`);
     const media=it.video
-      ?`<video controls playsinline preload="metadata" src="${it.video}"></video>`
+      ?`<video controls playsinline preload="none" poster="${it.poster||''}" src="${it.video}"></video>`
       :`<div class="vplay"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></div><span class="vsoon">Vídeo em breve</span>`;
-    return `<article class="vcard"><div class="vmedia">${media}</div><div class="vinfo"><h3>${m.label} · ${it.nome}</h3><a href="${WA+msg}" target="_blank" rel="noopener">Quero este →</a></div></article>`;
+    return `<article class="vcard"><div class="vmedia${it.video?' has-video':''}">${media}</div><div class="vinfo"><h3>${m.label} · ${it.nome}</h3><a href="${WA+msg}" target="_blank" rel="noopener">Quero este →</a></div></article>`;
   }).join('');
 }
 tabsEl.addEventListener('click',e=>{const b=e.target.closest('.tab');if(b)setTab(b.dataset.tab)});
@@ -318,7 +324,7 @@ document.querySelectorAll('.chip[data-tab]').forEach(c=>c.addEventListener('clic
   setTab(c.dataset.tab);
   document.getElementById('modelos').scrollIntoView({behavior:'smooth'});
 }));
-setTab('alarme');
+setTab('multimidia');
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%5)*70+'ms';io.observe(el)});
 document.querySelectorAll('.card').forEach(c=>c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--x',(e.clientX-r.left)+'px');c.style.setProperty('--y',(e.clientY-r.top)+'px')}));
